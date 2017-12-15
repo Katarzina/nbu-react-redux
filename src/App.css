@@ -1,0 +1,53 @@
+.app {
+  text-align: center;
+}
+
+
+.mainMenu {
+  display: inline-block;
+}
+
+.forecast-table {
+  margin: 0 auto;
+}
+
+thead {
+  background: lightblue;
+  color: #000;
+}
+
+tr {
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit;
+}
+
+.forecast-table thead th {
+  font-size: 13px;
+  padding: 10px 7px;
+  color: #fff;
+}
+
+.title {
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.title::after {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 50% 50%;
+  width: 12px;
+  height: 12px;
+  margin-left: 2px;
+  margin-right: -5px;
+  background-image: url(./sort.svg);
+}
+
+.currencyRed {
+  color: red;
+}
