@@ -1,6 +1,6 @@
 import {
     REQUEST, START, FAILED, RECEIVE, RATE,
-    BUDGET, BASE_URL,UPDATE, DAY, MONTH, YEAR
+    BUDGET, BASE_URL,UPDATE, DAY, MONTH, YEAR, AMOUNT, CURRENCY
 } from '../constants'
 import {LOADING, LOADING_RATE, LOADED} from "../reducer/loading";
 
@@ -30,6 +30,16 @@ export function receiveQuery(payload, type) {
 export const updateRate = (payload) => ({
     type: UPDATE + RATE,
     payload
+})
+
+export const updateAmount = (amount) => ({
+    type: UPDATE + AMOUNT,
+    amount
+})
+
+export const updateCurrency = (currency) => ({
+    type: UPDATE + CURRENCY,
+    currency
 })
 
 export const updateDay = (day) => ({

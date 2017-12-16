@@ -8,7 +8,8 @@ import {
     UPDATE,
     DAY,
     MONTH,
-    YEAR
+    YEAR,
+    AMOUNT, CURRENCY
 } from '../constants';
 import {
     dateYear, dateMonth, dateDay
@@ -21,12 +22,14 @@ const initialState = {
     isLoading: false,
     day: dateDay,
     month: dateMonth,
-    year: dateYear
+    year: dateYear,
+    amount: 0,
+    currency: 'USD'
 };
 
 export default (state = initialState, action) => {
-    const {type, payload : current, error, day, month, year} = action;
-   // console.log(type, current, day);
+    const {type, payload : current, error, day, month, year, amount, currency} = action;
+    console.log(type, amount);
     switch (type) {
         case REQUEST + START:
             return {
@@ -56,6 +59,16 @@ export default (state = initialState, action) => {
                 isInvalid: true,
                 isLoading: false,
                 error
+            }
+        case UPDATE + CURRENCY:
+            return {
+                ...state,
+                currency: currency
+            }
+        case UPDATE + AMOUNT:
+            return {
+                ...state,
+                amount: amount
             }
         case UPDATE + DAY :
             return {

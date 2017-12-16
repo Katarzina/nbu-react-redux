@@ -24,18 +24,6 @@ const createDaysList = (arr) => (
     ))
 );
 
-/*const arrayLoad = (arrayLoad, type = 1) => {
-    let array = []
-    arrayLoad.forEach ( function(value,index) {
-        if (type === 2) {
-            array.push(<option className='option' key={value} value={index}>{value}</option>)
-        } else {
-            array.push(<option className='option' key={value} value={value}>{value}</option>)
-        }
-    })
-    return array
-}*/
-
 class Interval extends Component {
 
     static propTypes = {

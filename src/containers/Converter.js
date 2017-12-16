@@ -6,7 +6,7 @@ import Loading from '../components/Loading/Loading'
 import Error from '../components/Error/Error'
 import { isLoaded } from '../reducer/loading'
 import { fetchApi } from '../action/index'
-
+import { RATE_LINK, RATE } from '../constants'
 
 class Converter extends Component {
 
@@ -15,9 +15,9 @@ class Converter extends Component {
     }
 
     componentDidMount() {
-        const {isLoaded, balance: {isLoading} = {}, fetchApi} = this.props
+        const {isLoaded, rate: {isLoading} = {}, fetchApi} = this.props
         console.log(isLoaded,isLoading)
-        if (!isLoaded && !isLoading) fetchApi()
+        if (!isLoaded && !isLoading) fetchApi(RATE_LINK, RATE)
     }
 
     render() {
@@ -41,14 +41,14 @@ class Converter extends Component {
 
         return (
             <div className="Rate">
-                <ConverterCurrent balance={current} />
+                <ConverterCurrent />
             </div>
         );
     }
 }
 
-export default connect(({loading, balance}) => ({
+export default connect(({loading, rate}) => ({
     isLoaded : isLoaded(loading),
-    balance
+    rate
 }),{fetchApi})(Converter)
 

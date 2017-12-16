@@ -13,12 +13,12 @@ class Navbar extends Component {
             <BrowserRouter>
                 <div className="Navbar">
                     <div className="mainMenu">
-                        <div><NavLink activeStyle={{color: 'red'}} to="/rate">Курс валют НБУ</NavLink></div>
-                        <div><NavLink activeStyle={{color: 'red'}} to="/balance">Конвертер валют</NavLink></div>
+                        <div><NavLink activeStyle={{color: 'red'}} to="/">Курс валют НБУ</NavLink></div>
+                        <div><NavLink activeStyle={{color: 'red'}} to="/converter">Конвертер валют</NavLink></div>
                         <div><NavLink activeStyle={{color: 'red'}} to="/budget">Бюджет</NavLink></div>
                     </div>
                     <Switch>
-                        <Route path="/rate" component={Rate}/>
+                        <Route exact path="/" component={Rate} />
                         <Route path="/converter" component={Converter}/>
                         <Route path="/budget" component={Budget}/>
                     </Switch>
