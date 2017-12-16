@@ -7,7 +7,7 @@
   display: inline-block;
 }
 
-.forecast-table {
+.currency-table {
   margin: 0 auto;
 }
 
@@ -22,7 +22,7 @@ tr {
   border-color: inherit;
 }
 
-.forecast-table thead th {
+.currency-table thead th {
   font-size: 13px;
   padding: 10px 7px;
   color: #fff;

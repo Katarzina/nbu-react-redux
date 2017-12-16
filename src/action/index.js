@@ -13,19 +13,15 @@ export function requestStart() {
     }
 }
 
-export function requestFailed(error) {
-    return {
+export const  requestFailed = (error) =>  ({
         type: REQUEST + FAILED,
-        error
-    }
-}
+        payload : error
+    })
 
-export function receiveQuery(payload, type) {
-    return {
+export const receiveQuery = (payload, type) =>  ({
         type,
         payload
-    }
-}
+    })
 
 export const updateRate = (payload) => ({
     type: UPDATE + RATE,
@@ -34,27 +30,27 @@ export const updateRate = (payload) => ({
 
 export const updateAmount = (amount) => ({
     type: UPDATE + AMOUNT,
-    amount
+    payload: amount
 })
 
 export const updateCurrency = (currency) => ({
     type: UPDATE + CURRENCY,
-    currency
+    payload: currency
 })
 
 export const updateDay = (day) => ({
     type: UPDATE + DAY,
-    day
+    payload: day
 })
 
 export const updateMonth = (month) => ({
     type: UPDATE + MONTH,
-    month
+    payload: month
 })
 
 export const updateYear = (year) => ({
     type: UPDATE + YEAR,
-    year
+    payload: year
 })
 
 export function fetchApi(link, mode) {

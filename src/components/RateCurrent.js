@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { updateRate } from '../action'
 import {connect} from 'react-redux'
-//import { ARRAY_CURRENCY, RATE_LINK_DATE, RATE } from '../constants'
+import { USD, EUR, RUB, ARRAY_MAIN_CURRENCY } from '../constants'
 
 import {stateSelector, currentSelector} from '../reducer/rate'
 
@@ -58,13 +58,12 @@ class RateCurrent extends Component {
 
     render() {
 
-        const { current } = this.props
-        console.log(current)
-       // let rateCurrency = choiceCurrency(rate, ARRAY_CURRENCY)
+        const { current, condition } = this.props
+        let rateCurrency = (condition) ? choiceCurrency( current, ARRAY_MAIN_CURRENCY) : current
 
         return (
-            <div className="WeatherCurrent">
-                <table className="forecast-table">
+            <div>
+                <table className="currency-table">
                     <thead>
                     <tr>
                         <th onClick={() => this.sort('r030')}><span className="title" title="Отсортировать">Код</span></th>
@@ -75,8 +74,8 @@ class RateCurrent extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                {current.map(( exchange) => {
-                if (exchange.cc === 'USD' || exchange.cc === 'EUR' || exchange.cc === 'RUB') {
+                {rateCurrency.map(( exchange) => {
+                if ((exchange.cc === USD || exchange.cc === EUR || exchange.cc === RUB) && !condition) {
                     return <tr className="currencyRed" key={exchange.r030}>
                         <td className="rate">{exchange.r030}</td>
                         <td className="rate">{exchange.cc}</td>

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import ConverterCurrent from '../components/Converter'
+import RateCurrent from '../components/RateCurrent'
 import Loading from '../components/Loading/Loading'
 import Error from '../components/Error/Error'
 import { isLoaded } from '../reducer/loading'
@@ -42,6 +43,7 @@ class Converter extends Component {
         return (
             <div className="Rate">
                 <ConverterCurrent />
+                <RateCurrent condition={true} />
             </div>
         );
     }

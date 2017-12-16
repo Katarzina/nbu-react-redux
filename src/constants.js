@@ -14,8 +14,13 @@ export const RATE_LINK = 'exchange?json'
 //export const RATE_LINK_DATE = "exchange?date=20171210&json"
 export const RATE_LINK_DATE = "exchange?date="
 export const BUDGET_LINK = 'budget?period=y&date=201601&json'
-//export const ARRAY_CURRENCY = ['USD','EUR','RUB','PLN']
-export const ARRAY_CURRENCY = ['USD','EUR','RUB','UAH']
+export const USD = 'USD'
+export const EUR = 'EUR'
+export const RUB = 'RUB'
+export const UAH = 'UAH'
+export const PLN = 'PLN'
+export const ARRAY_MAIN_CURRENCY = [USD,EUR,RUB,PLN]
+export const ARRAY_CURRENCY = [USD,EUR,RUB,UAH]
 export const MONTHS = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь',
     'Декабрь'];
 

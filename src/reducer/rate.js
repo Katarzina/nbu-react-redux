@@ -28,8 +28,7 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-    const {type, payload : current, error, day, month, year, amount, currency} = action;
-    console.log(type, amount);
+    const {type, payload} = action;
     switch (type) {
         case REQUEST + START:
             return {
@@ -41,7 +40,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isInvalid: false,
-                current,
+                current: payload,
                 isLoading: false
             }
 
@@ -49,7 +48,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isInvalid: false,
-                current,
+                current : payload,
                 isLoading: false
             }
 
@@ -58,37 +57,37 @@ export default (state = initialState, action) => {
                 ...state,
                 isInvalid: true,
                 isLoading: false,
-                error
+                error  : payload,
             }
         case UPDATE + CURRENCY:
             return {
                 ...state,
-                currency: currency
+                currency: payload,
             }
         case UPDATE + AMOUNT:
             return {
                 ...state,
-                amount: amount
+                amount : payload,
             }
         case UPDATE + DAY :
             return {
                 ...state,
-                day: day
+                day : payload,
             }
         case UPDATE + MONTH :
             return {
                 ...state,
-                month: month
+                month : payload,
             }
         case UPDATE + YEAR :
             return {
                 ...state,
-                year: year
+                year : payload,
             }
         case UPDATE + RATE :
             return {
                 ...state,
-                current
+                current : payload,
             }
         default:
             return state;

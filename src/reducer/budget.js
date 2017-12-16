@@ -42,7 +42,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 isInvalid: true,
-                error: action.error
+                error: payload
             }
 
         default:
