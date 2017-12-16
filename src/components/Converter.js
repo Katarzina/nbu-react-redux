@@ -10,34 +10,25 @@ const choiceArrayCurrency = (arrayCurrency, currency) => {
     })
 }
 
-
-
-
 const calculateResult = (current, amount, currency) => {
 
     const arrayCurrency = choiceArrayCurrency(ARRAY_CURRENCY,currency)
     let cur = (currency === UAH) ? 1 : getCurrencyRate(current, currency)
-    let uahAmount = (cur * amount).toFixed(2)
-    let usd = getCurrencyRate(current, USD)
-    let eur = getCurrencyRate(current, EUR)
-    let rub = getCurrencyRate(current, RUB)
-    let usdAmount = (cur * amount / usd ).toFixed(2)
-    let eurAmount = (cur * amount / eur).toFixed(2)
-    let rubAmount = (amount === 0) ? '0.00' : ((amount / rub) * cur ).toFixed(2)
     return arrayCurrency.map( (arr) => {
+        let rateCurrency = getCurrencyRate(current, arr)
         switch (arr) {
             case USD:
-                return [USD, usd , usdAmount]
             case EUR:
-                return [EUR, eur , eurAmount]
+                return { currency: arr, rate: rateCurrency , amount: (cur * amount / rateCurrency ).toFixed(2) }
             case UAH:
-                return [UAH, cur , uahAmount]
+                return { currency: arr, rate: cur , amount: (cur * amount).toFixed(2) }
             case RUB:
-                return [RUB, rub , rubAmount]
+                return { currency: arr, rate: rateCurrency , amount: (amount === 0) ? '0.00' : ((amount / rateCurrency ) * cur ).toFixed(2) }
             default:
-                return [USD, usd , usdAmount]
+                return
         }
     })
+
 }
 
 const createCurrencyList = (arr) => (
@@ -47,10 +38,11 @@ const createCurrencyList = (arr) => (
 );
 
 const getCurrencyRate = (arr, currency) => {
+    if (currency === UAH) return 0.00
     const result = arr.filter( (item) => {
         return (item.cc === currency)
     })
-    return (result[0].rate === undefined) ? 0.00 : result[0].rate
+    return (result[0].rate == undefined) ? 0.00 : result[0].rate
 }
 
 class Converter extends Component {
@@ -87,21 +79,13 @@ class Converter extends Component {
             </select>
             <div>
                 <h4>Результат</h4>
-                <p>
-                    <input readOnly="readonly" value={ arrayResult[0][2]} size="10" type="text" />
-                    <span>{arrayResult[0][0]}</span>
-                    <input value={arrayResult[0][1]} size="4" type="text" />
+                {arrayResult.map(( result ) => {
+                return <p>
+                    <input readOnly="readonly" value={ result.amount} size="10" type="text" />
+                    <span>{result.currency}</span>
+                    <input value={result.rate} size="4" type="text" />
                 </p>
-                <p>
-                    <input readOnly="readonly" value={ arrayResult[1][2]} size="10" type="text" />
-                    <span>{arrayResult[1][0]}</span>
-                    <input value={arrayResult[1][1]} size="4" type="text" />
-                </p>
-                <p>
-                    <input readOnly="readonly" value={ arrayResult[2][2]} size="10" type="text" />
-                    <span>{arrayResult[2][0]}</span>
-                    <input value={arrayResult[2][1]} size="4" type="text" />
-                </p>
+                })}
             </div>
             </div>
         )
