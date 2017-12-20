@@ -1,6 +1,6 @@
 import {
     REQUEST, START, FAILED, RECEIVE, RATE,
-    BUDGET, BASE_URL,UPDATE, DAY, MONTH, YEAR, AMOUNT, CURRENCY
+    UPDATE, DAY, MONTH, YEAR, AMOUNT, CURRENCY, FILTER
 } from '../constants'
 import {LOADING, LOADING_RATE, LOADED} from "../reducer/loading";
 
@@ -25,6 +25,11 @@ export const receiveQuery = (payload, type) =>  ({
 
 export const updateRate = (payload) => ({
     type: UPDATE + RATE,
+    payload
+})
+
+export const updateFilter = (payload) => ({
+    type: UPDATE + FILTER,
     payload
 })
 
@@ -53,17 +58,14 @@ export const updateYear = (year) => ({
     payload: year
 })
 
-export function fetchApi(link, mode) {
-    const url = `${BASE_URL}/${link}`
+export function fetchApi(link , mode) {
 
-   // const isWeather = (fnName) => fnName === 'weather'
-    console.log(url);
     return function (dispatch) {
 
         dispatch(loading(LOADING_RATE));
         dispatch(requestStart());
-
-        return fetch(url)
+        console.log(link)
+        return fetch(link)
             .then(response => {
                 if (response.status >= 400) {
                     throw new Error(response.statusText)
@@ -73,13 +75,10 @@ export function fetchApi(link, mode) {
             .then(json => (
                 dispatch(receiveQuery(json, RECEIVE + mode))
                 )
-            ).
-            then(dispatch(loaded(LOADING_RATE)))
+            ).then(dispatch(loaded(LOADING_RATE)))
                 .catch(error => {
-                    console.log('error: ', error);
                     dispatch(requestFailed(error.toString()))
                 })
-
     }
 
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
 import { ARRAY_CURRENCY } from '../constants'
 //import {connect} from 'react-redux'
 //import {increment} from '../AC'

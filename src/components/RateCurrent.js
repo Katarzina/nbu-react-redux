@@ -92,6 +92,7 @@ class RateCurrent extends Component {
                         <td className="rate">{exchange.exchangedate}</td>
                     </tr>
                 }
+
                 })}
                     </tbody>
                 </table>

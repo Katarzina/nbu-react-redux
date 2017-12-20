@@ -4,7 +4,6 @@ import {
     FAILED,
     RECEIVE,
     RATE,
-    BUDGET,
     UPDATE,
     DAY,
     MONTH,
@@ -41,14 +40,6 @@ export default (state = initialState, action) => {
                 ...state,
                 isInvalid: false,
                 current: payload,
-                isLoading: false
-            }
-
-        case RECEIVE + BUDGET:
-            return {
-                ...state,
-                isInvalid: false,
-                current : payload,
                 isLoading: false
             }
 

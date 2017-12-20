@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { fetchApi, updateDay, updateMonth, updateYear } from '../action'
-import { MONTHS, RATE_LINK_DATE, RATE } from '../constants'
+import { BASE_URL, MONTHS, RATE_LINK_DATE, RATE } from '../constants'
 //import {stateSelector, currentSelector} from '../reducer/rate'
 import { years , days /*, dateYear, dateMonth, dateDay*/ } from '../share/share'
 //import { bindActionCreators } from 'redux'
@@ -41,35 +41,31 @@ class Interval extends Component {
 
         let {rate: {day, month, year} = {}} = this.props;
         let correctMonth = this.getCorrectMonth(++month);
-        this.props.fetchApi(RATE_LINK_DATE + year+correctMonth+day + '&json', RATE)
+        this.props.fetchApi(BASE_URL + RATE_LINK_DATE + year+correctMonth+day + '&json', RATE)
 
         return false
     }
 
     handleChangeDay = ( {target : {value}} ) => {
         this.props.updateDay(value);
-       // console.log(value);
 
         return false;
     }
 
     handleChangeMonth = ({target : {value}}) => {
         this.props.updateMonth(value);
-       // console.log(value);
 
         return false
     }
 
     handleChangeYear = ({target : {value}}) => {
         this.props.updateYear(value)
-       // console.log(value);
         return false;
     }
 
 
     render() {
         const {rate: {day, month, year} = {}} = this.props;
-       // console.log(this.props);
         const daysSelect = createDaysList(days())
         const monthsSelect = createMonthList(MONTHS)
         const yearsSelect = createYearList(years())

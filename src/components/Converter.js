@@ -1,33 +1,53 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import Currency from './Currency'
 import { updateAmount, updateCurrency } from '../action'
 import { USD, EUR, RUB, UAH, ARRAY_CURRENCY } from '../constants'
 
-const choiceArrayCurrency = (arrayCurrency, currency) => {
-    return arrayCurrency.filter( (arr) => {
-            return arr !== currency
-    })
+function Eur( current, amount, currency ) {
+
+    this.currency = EUR
+
+    this.rate = getCurrencyRate(current, this.currency)
+
+    this.rateCurrency = (currency === UAH) ? 1 : getCurrencyRate(current, currency)
+
+    this.calculate = (this.rateCurrency * amount / this.rate ).toFixed(2)
+
 }
 
-const calculateResult = (current, amount, currency) => {
+function Usd( current, amount, currency ) {
 
-    const arrayCurrency = choiceArrayCurrency(ARRAY_CURRENCY,currency)
-    let cur = (currency === UAH) ? 1 : getCurrencyRate(current, currency)
-    return arrayCurrency.map( (arr) => {
-        let rateCurrency = getCurrencyRate(current, arr)
-        switch (arr) {
-            case USD:
-            case EUR:
-                return { currency: arr, rate: rateCurrency , amount: (cur * amount / rateCurrency ).toFixed(2) }
-            case UAH:
-                return { currency: arr, rate: cur , amount: (cur * amount).toFixed(2) }
-            case RUB:
-                return { currency: arr, rate: rateCurrency , amount: (amount === 0) ? '0.00' : ((amount / rateCurrency ) * cur ).toFixed(2) }
-            default:
-                return
-        }
-    })
+    this.currency = USD
+
+    this.rate = getCurrencyRate(current, this.currency)
+
+    this.rateCurrency = (currency === UAH) ? 1 : getCurrencyRate(current, currency)
+
+    this.calculate = (this.rateCurrency * amount / this.rate ).toFixed(2)
+
+}
+
+function Uah( current, amount, currency ) {
+
+    this.currency = UAH
+
+    this.rate = (currency === UAH) ? 1 : getCurrencyRate(current, currency)
+
+    this.calculate = (this.rate * amount).toFixed(2)
+
+}
+
+function Rub( current, amount, currency ) {
+
+    this.currency = RUB
+
+    this.rate = getCurrencyRate(current, this.currency)
+
+    this.rateCurrency = (currency === UAH) ? 1 : getCurrencyRate(current, currency)
+
+    this.calculate = (amount === 0) ? '0.00' : ((amount / this.rate ) * this.rateCurrency ).toFixed(2)
 
 }
 
@@ -37,12 +57,12 @@ const createCurrencyList = (arr) => (
     ))
 );
 
-const getCurrencyRate = (arr, currency) => {
+const getCurrencyRate = (arr , currency) => {
     if (currency === UAH) return 0.00
     const result = arr.filter( (item) => {
         return (item.cc === currency)
     })
-    return (result[0].rate == undefined) ? 0.00 : result[0].rate
+    return (result[0].rate == null) ? 0.00 : result[0].rate
 }
 
 class Converter extends Component {
@@ -54,8 +74,8 @@ class Converter extends Component {
         amount: PropTypes.number.isRequired
     }
 
-    onChangeHandler = ({target : {value}}) => {
-        this.props.updateAmount(value);
+    onChangeHandler = (ev) => {
+        if (ev.target.validity.valid) this.props.updateAmount(ev.target.value);
         return false
     }
 
@@ -67,25 +87,38 @@ class Converter extends Component {
     render() {
         const {rate: {current, amount, currency} = {}} = this.props;
         const currencySelect = createCurrencyList(ARRAY_CURRENCY)
-        const arrayResult = calculateResult( current, amount, currency )
+       // const arrayCurrency = choiceArrayCurrency(ARRAY_CURRENCY,currency)
+
+        let UahFactory = new Uah(current, amount, currency);
+        let UsdFactory = new Usd(current, amount, currency);
+        let EurFactory = new Eur(current, amount, currency);
+        let RubFactory = new Rub(current, amount, currency);
 
         return (
             <div>
             <form onChange={this.onChangeHandler}>
-                <input type="text" placeholder="0.00" />
+                <input type="text" placeholder="0.00" pattern="[.0-9]*" />
             </form>
             <select name="currency" value={currency} onChange={this.handleChangeCurrency}>
                 {currencySelect}
             </select>
-            <div>
-                <h4>Результат</h4>
-                {arrayResult.map(( result ) => {
-                return <p>
-                    <input readOnly="readonly" value={ result.amount} size="10" type="text" />
-                    <span>{result.currency}</span>
-                    <input value={result.rate} size="4" type="text" />
-                </p>
-                })}
+            <div><h4>Результат</h4>
+                { (currency !== EurFactory.currency) ?
+                    ( <Currency value = {EurFactory.calculate} currency={EurFactory.currency}
+                                rate = {EurFactory.rate} /> ) : (<p></p>)
+                }
+                { (currency !== UsdFactory.currency) ?
+                    ( <Currency value = {UsdFactory.calculate} currency={UsdFactory.currency}
+                                rate = {UsdFactory.rate} /> ) : (<p></p>)
+                }
+                { (currency !== UahFactory.currency) ?
+                    ( <Currency value = {UahFactory.calculate} currency={UahFactory.currency}
+                                rate = {UahFactory.rate} /> ) : (<p></p>)
+                }
+                { (currency !== RubFactory.currency) ?
+                    ( <Currency value = {RubFactory.calculate} currency={RubFactory.currency}
+                                rate = {RubFactory.rate} /> ) : (<p></p>)
+                }
             </div>
             </div>
         )

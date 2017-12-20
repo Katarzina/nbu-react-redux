@@ -1,11 +1,13 @@
 import {
+    UPDATE,
     REQUEST,
     START,
     FAILED,
     RECEIVE,
-    RATE,
-    BUDGET
+    BANKS,
+    FILTER
 } from '../constants';
+import {createSelector} from 'reselect'
 
 const initialState = {
     isInvalid: false,
@@ -16,6 +18,8 @@ export default (state = initialState, action) => {
 
     const {type, payload} = action
 
+    console.log(type, payload)
+
     switch (type) {
         case REQUEST + START:
             return {
@@ -23,20 +27,18 @@ export default (state = initialState, action) => {
                 isInvalid: false,
                 isLoading: true
             }
-        case RECEIVE + RATE:
+        case RECEIVE + BANKS:
             return {
                 ...state,
                 isInvalid: false,
                 current: payload,
+                data: payload,
                 isLoading: false
             }
-
-        case RECEIVE + BUDGET:
+        case UPDATE + FILTER :
             return {
                 ...state,
-                isInvalid: false,
-                current: payload,
-                isLoading: false
+                current : payload,
             }
         case REQUEST + FAILED:
             return {
@@ -44,10 +46,13 @@ export default (state = initialState, action) => {
                 isInvalid: true,
                 error: payload
             }
-
         default:
             return state;
     }
 };
+
+export const stateSelectorBanks = (state) => state['banks'];
+export const currentSelectorBanks = createSelector(stateSelectorBanks, (banks) => banks['current']);
+
 
 
