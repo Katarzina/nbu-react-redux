@@ -1,9 +1,21 @@
 import React from 'react'
+import {PropTypes} from "prop-types";
 
-const Loading = () => {
-		return (
-			<div className="loading">Loading...</div>
-		)
+
+
+
+const propTypes = {
+    error: PropTypes.string
+};
+const defaultProps = {
+    error: ''
 }
 
-export default Loading
+// get error from props
+const Loading = ({error}) => (
+    <div className="loading">Loading...</div>
+
+);
+
+Loading.propTypes = propTypes;
+Loading.defaultProps = defaultProps;
