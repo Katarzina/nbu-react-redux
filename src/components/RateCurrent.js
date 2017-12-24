@@ -101,7 +101,7 @@ class RateCurrent extends Component {
     }
 }
 export default connect((state) => ({
-   rate: stateSelector(state),
-   current : currentSelector(state)
-}), {updateRate})(RateCurrent)
+    rate: stateSelector(state),
+    current: currentSelector(state)})
+    , {updateRate})(RateCurrent)
 

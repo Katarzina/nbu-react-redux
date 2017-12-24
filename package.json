@@ -2,7 +2,7 @@
   "name": "nbu-react-redux",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "http://katarzina.github.io/nbu-react-redux",
+  "homepage": "http://katarzina.github.io/nbu-react-redux",
   "dependencies": {
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
