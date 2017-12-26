@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import RateCurrent from '../components/RateCurrent'
-import Loading from '../components/Loading/Loading'
-import Error from '../components/Error/Error'
+import {Loading} from '../components/Loading/Loading'
+import {Error} from '../components/Error/Error'
 import { isLoaded } from '../reducer/loading'
 import { fetchApi } from '../action/index'
 import { BASE_URL, RATE_LINK, RATE } from '../constants'
@@ -23,7 +23,6 @@ class Rate extends Component {
 
     render() {
         const {isLoaded, rate: {error, current, isInvalid, isLoading} = {}} = this.props
-       // console.log('isInvalid',isInvalid, error, isLoading)
         if (isLoading) {
             return (
                 <h2><Loading /></h2>

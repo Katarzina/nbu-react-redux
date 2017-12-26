@@ -3,12 +3,11 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import BanksCurrent from '../components/Banks'
 import SearchBar from '../components/SearchBar'
-import Loading from '../components/Loading/Loading'
-import Error from '../components/Error/Error'
-import { isLoaded } from '../reducer/loading'
-import { fetchApi } from '../action/index'
-import { BANKS_LINK, BANKS } from '../constants'
-
+import {Loading} from '../components/Loading/Loading'
+import {Error} from '../components/Error/Error'
+import {isLoaded} from '../reducer/loading'
+import {fetchApi} from '../action/index'
+import {BANKS_LINK, BANKS} from '../constants'
 
 class Banks extends Component {
 
@@ -24,7 +23,6 @@ class Banks extends Component {
 
     render() {
         const {isLoaded, banks: {error, current, isInvalid, isLoading} = {}} = this.props
-       // console.log(current)
         if (isLoading) {
             return (
                 <h2><Loading /></h2>

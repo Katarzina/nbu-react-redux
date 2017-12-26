@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { fetchApi, updateDay, updateMonth, updateYear } from '../action'
 import { BASE_URL, MONTHS, RATE_LINK_DATE, RATE } from '../constants'
-//import {stateSelector, currentSelector} from '../reducer/rate'
-import { years , days /*, dateYear, dateMonth, dateDay*/ } from '../share/share'
-//import { bindActionCreators } from 'redux'
+import { years , days } from '../share/share'
 
 const createYearList = (arr) => (
     arr.map((year) => (

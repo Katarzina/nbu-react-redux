@@ -25,29 +25,23 @@ import isNumber from 'lodash/isNumber';
 const isTotal = (val) => val === 'total';
 
 const sum = (arr) => (
-    arr.reduce((acc, {to023, value}) => {
-        if (isTotal(to023) && isNumber(value)) {
+    arr.reduce((acc, {t023, value}) => {
+        if (isTotal(t023) && isNumber(value)) {
             return acc += value
         }
         return acc;
     }, 0)
 );
 
-
 const getIndicators = (current) => (
-    current.map(({t023,txt, dt, value}) => {
-        if(isTotal(t023) && value >= 0) {
-            return(
-                <tr key={txt}>
-                    <td className="rate">{dt}</td>
-                    <td className="rate">{txt.substring(0, 80)}</td>
-                    <td className="rate">{value}</td>
-                </tr>
-            )
-        }
-
-        return (<tr/>)
-    })
+    current.filter(({t023}) => isTotal(t023))
+        .map(({txt,dt,value}) => (
+        <tr key={txt}>
+            {[dt, txt, value].map((item) => (
+                <td className="rate">{item}</td>
+            ))}
+        </tr>
+    ))
 )
 /*
 
@@ -83,7 +77,7 @@ class Banks extends Component {
     render() {
         const {current} = this.props;
 
-        const _indicatorsTemplate = getIndicators(current);
+        //const _indicatorsTemplate = getIndicators(current);
         return (
             <div>
                 <table className="currency-table">
@@ -95,13 +89,13 @@ class Banks extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {_indicatorsTemplate}
+                    {getIndicators(current)}
                     <tr>
                         <td/>
                         <td>Total</td>
                         <td>{sum(current, POSITIVE)}</td>
                     </tr>
-                    {_indicatorsTemplate}
+                    {getIndicators(current)}
                     <tr>
                         <td/>
                         <td>Total</td>

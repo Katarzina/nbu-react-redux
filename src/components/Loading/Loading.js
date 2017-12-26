@@ -1,7 +1,6 @@
 import React from 'react'
 import {PropTypes} from "prop-types";
 
-
 const propTypes = {};
 const defaultProps = {}
 
@@ -11,3 +10,5 @@ const Loading = () => (
 
 Loading.propTypes = propTypes;
 Loading.defaultProps = defaultProps;
+
+export {Loading}

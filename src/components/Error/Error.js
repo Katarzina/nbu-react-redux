@@ -10,22 +10,10 @@ const defaultProps = {
 
 // get error from props
 const Error = ({error}) => (
-    <div className="error"> Failed to get data: {this.props.error}</div>
+    <div className="error"> Failed to get data: {error}</div>
 );
 
 Error.propTypes = propTypes;
 Error.defaultProps = defaultProps;
 
-export {
-	Error
-}
-
-// class Error extends Component {
-// 	render() {
-// 		return (
-// 			<div className="error"> Failed to get data: {this.props.error}</div>
-// 		)
-// 	}
-// }
-//
-// export default Error
+export {Error}
