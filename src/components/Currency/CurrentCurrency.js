@@ -1,19 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Current = (props) => {
+const currentCurrency = (props) => {
 	const {value, currency, rate} = props
-		return  <p>
+		return <p>
                 <input readOnly="readonly" value= {value} size="10" type="text" />
                 <span>{currency}</span>
-                <input value={rate} size="4" type="text" />
+                <input readOnly="readonly" value={rate} size="4" type="text" />
             </p>
 }
 
-Current.PropTypes = {
-    value: PropTypes.number,
+currentCurrency.propTypes = {
+    value: PropTypes.string,
     currency: PropTypes.string,
     rate: PropTypes.number
 }
 
-export default Current
+export default currentCurrency

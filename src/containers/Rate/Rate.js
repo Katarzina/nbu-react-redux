@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import RateCurrent from '../components/RateCurrent'
-import {Loading} from '../components/Loading/Loading'
-import {Error} from '../components/Error/Error'
-import { isLoaded } from '../reducer/loading'
-import { fetchApi } from '../action/index'
-import { BASE_URL, RATE_LINK, RATE } from '../constants'
+import RateCurrent from './RateCurrent'
+import {Loading} from '../../components/Loading/Loading'
+import {Error} from '../../components/Error/Error'
+import { isLoaded } from '../../reducer/loading'
+import { fetchApi } from '../../action/index'
+import { BASE_URL, RATE_LINK, RATE } from '../../constants'
 
 
 class Rate extends Component {
@@ -17,7 +17,7 @@ class Rate extends Component {
 
     componentDidMount() {
         const {isLoaded, rate: {isLoading} = {}, fetchApi} = this.props
-        console.log(isLoaded,isLoading)
+       // console.log(isLoaded,isLoading)
         if (!isLoaded && !isLoading) fetchApi( BASE_URL + RATE_LINK, RATE )
     }
 

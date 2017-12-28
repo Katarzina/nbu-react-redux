@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { updateRate } from '../action'
+import { updateRate } from '../../action'
 import {connect} from 'react-redux'
-import { USD, EUR, RUB, ARRAY_MAIN_CURRENCY } from '../constants'
-
-import {stateSelector, currentSelector} from '../reducer/rate'
+import { ARRAY_MAIN_CURRENCY } from '../../constants'
+import {stateSelector, currentSelector} from '../../reducer/rate'
 
 /**
 * Filter rate data by currency
@@ -21,6 +20,10 @@ const choiceCurrency = (rates, arrayCurrency) => {
     })
 }
 
+const Rate = ({children}) => (
+    <td className="rate">{children}</td>
+)
+
 class RateCurrent extends Component {
     static propTypes = {
         current: PropTypes.array,
@@ -35,8 +38,6 @@ class RateCurrent extends Component {
 
         // get sorting order
         const isSorted = this.sorted[type];
-
-       // console.log(isSorted)
 
         // set direction
         let direction = isSorted ? 1 : -1;
@@ -53,7 +54,6 @@ class RateCurrent extends Component {
         this.sorted[type] = !isSorted;
 
         updateRate(sorted)
-
     }
 
     render() {
@@ -74,24 +74,13 @@ class RateCurrent extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                {rateCurrency.map(( exchange) => {
-                if ((exchange.cc === USD || exchange.cc === EUR || exchange.cc === RUB) && !condition) {
-                    return <tr className="currencyRed" key={exchange.r030}>
-                        <td className="rate">{exchange.r030}</td>
-                        <td className="rate">{exchange.cc}</td>
-                        <td className="rate">{exchange.txt}</td>
-                        <td className="rate">{exchange.rate}</td>
-                        <td className="rate">{exchange.exchangedate}</td>
-                    </tr>
-                } else {
-                    return <tr key={exchange.r030}>
-                        <td className="rate">{exchange.r030}</td>
-                        <td className="rate">{exchange.cc}</td>
-                        <td className="rate">{exchange.txt}</td>
-                        <td className="rate">{exchange.rate}</td>
-                        <td className="rate">{exchange.exchangedate}</td>
-                    </tr>
-                }
+                {rateCurrency.map(({r030,cc,txt,rate,exchangedate}) => {
+                    const isColorRed = ARRAY_MAIN_CURRENCY.includes(cc) && !condition
+                    return <tr className={(isColorRed)?"currencyRed":""} key={r030}>
+                            {[r030,cc,txt,rate,exchangedate].map((item, index) => (
+                                <Rate key={index}>{item}</Rate>
+                            ))}
+                        </tr>
 
                 })}
                     </tbody>

@@ -1,14 +1,11 @@
 import {
-    REQUEST,
-    START,
-    FAILED,
-    RECEIVE,
-    RATE,
-    UPDATE,
-    DAY,
-    MONTH,
-    YEAR,
-    AMOUNT, CURRENCY
+    REQUEST, START,
+    FAILED, RECEIVE,
+    RATE, UPDATE,
+    DAY, MONTH,
+    YEAR, AMOUNT,
+    CURRENCY,
+    NULL_CURRENCY_VALUE, USD_CURRENCY
 } from '../constants';
 import {
     dateYear, dateMonth, dateDay
@@ -22,8 +19,8 @@ const initialState = {
     day: dateDay,
     month: dateMonth,
     year: dateYear,
-    amount: 0,
-    currency: 'USD'
+    amount: NULL_CURRENCY_VALUE,
+    currency: USD_CURRENCY
 };
 
 export default (state = initialState, action) => {

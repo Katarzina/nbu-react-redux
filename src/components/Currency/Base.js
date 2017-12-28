@@ -1,98 +1,93 @@
-import {EUR, RUB} from "../../constants";
+//import React from 'react'
+import {USD_CURRENCY, EUR_CURRENCY, RUB_CURRENCY, UAH_CURRENCY, NULL_CURRENCY_VALUE} from "../../constants";
 import get from 'lodash/get';
 
-class BaseCurrency {
-    currency = ''
-    rate = () => {
-    }
-    calculate = () => {
-    }
+const getCurrencyRate = (arr , currency) => {
+    if (currency === UAH_CURRENCY) return NULL_CURRENCY_VALUE
+    const result = arr.filter( ({cc}) => {
+        return (cc === currency)
+    })
+
+    return !get(result, '0.rate')
+        ? NULL_CURRENCY_VALUE
+        : get(result, '0.rate')
 }
 
-const CURRENCY_TYPES = [
-    USD_CURRENCY,
-    EUR_CURRENCY,
-    RUB_CURRENCY,
-    UAH_CURRENCY
-];
+class CurrencyRate {
 
-const
-    USD_CURRENCY = 'USD',
-    BASE_CURRENCY = 'USD',
-    EUR_CURRENCY = 'EUR',
-    RUB_CURRENCY = 'RUB',
-    UAH_CURRENCY = 'UAH';
-
-
-const BASE_CURRENCY_VALUE = '0.00';
-
-class CurrencyRate extends BaseCurrency {
-
-    current = [];
-    currency = BASE_CURRENCY;
-    amount = 0;
-
-
-    getRate = () => {
-
-        if (BASE_CURRENCY === this.currency) {
-            return BASE_CURRENCY_VALUE;
-        }
-
-        const res = this.current.filter(({cc}) => (
-            cc === this.currency
-        ))
-
-        return get(res, '0.rate') === null
-            ? BASE_CURRENCY_VALUE
-            : get(res, '0.rate')
+    constructor(current, amount, selectedCurrency) {
+        this.current = current;
+        this.amount = amount;
+        this.selectedCurrency = selectedCurrency;
     }
 
-    getCurrencyRate = () => {
-        if(UAH_CURRENCY === this.currency) {
-            return 1;
-        }
+    rate = () => ( getCurrencyRate(this.current, this.currency) )
 
-        return this.getRate()
-    }
+    getSelectedRate = () => (
+        (UAH_CURRENCY === this.selectedCurrency) ? 1 : getCurrencyRate(this.current, this.selectedCurrency)
+    )
 
     calculate = () => (
-        ( (this.rateCurrency * this.amount) / this.getRate() ).toFixed(2)
+        ((this.getSelectedRate() * this.amount) / this.rate()).toFixed(2)
     )
 }
 
-class CarrencyEur extends CurrencyRate {
+class CurrencyEur extends CurrencyRate {
 
     currency = EUR_CURRENCY;
 
+}
 
-    constructor(current, amount, currency){
-        super();
+class CurrencyUsd extends CurrencyRate {
 
-        this.current = current;
-        this.amount = amount;
-        this.currency = currency;
-
-    }
-
+    currency = USD_CURRENCY;
 
 }
 
-class CurrencyFactory {
-    static run(currencyType) {
+class CurrencyUah extends CurrencyRate {
+
+    currency = UAH_CURRENCY;
+
+    rate = () => (
+        (this.selectedCurrency === UAH_CURRENCY) ? 1 : getCurrencyRate(this.current, this.selectedCurrency)
+    )
+
+    calculate = () => (
+        (this.rate() * this.amount).toFixed(2)
+    )
+}
+
+class CurrencyRub extends CurrencyRate {
+
+    currency = RUB_CURRENCY;
+
+    calculate = () => (
+        ((this.amount / this.rate()) * this.getSelectedRate()).toFixed(2)
+    )
+}
+
+const currencyFactory = (currencyType, current, amount, currency) => {
+        let factory = {}
         switch (currencyType) {
             case (USD_CURRENCY) :
+                factory = new CurrencyUsd(current, amount, currency);
                 break
+
             case (EUR_CURRENCY) :
+                factory = new CurrencyEur(current, amount, currency);
                 break
+
             case (RUB_CURRENCY) :
+                factory = new CurrencyRub(current, amount, currency);
                 break
+
             case (UAH_CURRENCY) :
+                factory = new CurrencyUah(current, amount, currency);
+                break
+            default :
                 break
         }
-    }
+    return factory
 }
 
-export {
-    BaseCurrency
-}
+export {currencyFactory}

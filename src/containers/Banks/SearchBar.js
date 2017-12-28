@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { updateFilter } from '../action'
-import {stateSelectorBanks, currentSelectorBanks} from '../reducer/banks'
+import { updateFilter } from '../../action'
+import {stateSelectorBanks, currentSelectorBanks} from '../../reducer/banks'
 
 
 class SearchBar extends Component {

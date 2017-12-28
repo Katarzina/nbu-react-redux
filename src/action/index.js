@@ -64,7 +64,7 @@ export function fetchApi(link , mode) {
 
         dispatch(loading(LOADING_RATE));
         dispatch(requestStart());
-        console.log(link)
+      //  console.log(link)
         return fetch(link)
             .then(response => {
                 if (response.status >= 400) {

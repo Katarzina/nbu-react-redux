@@ -1,5 +1,3 @@
-
-// const
 export const LOADING_RATE = 1;
 
 export const LOADING = 'LOADING';

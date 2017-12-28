@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import BanksCurrent from '../components/Banks'
-import SearchBar from '../components/SearchBar'
-import {Loading} from '../components/Loading/Loading'
-import {Error} from '../components/Error/Error'
-import {isLoaded} from '../reducer/loading'
-import {fetchApi} from '../action/index'
-import {BANKS_LINK, BANKS} from '../constants'
+import BanksCurrent from './BanksFilter'
+import SearchBar from './SearchBar'
+import {Loading} from '../../components/Loading/Loading'
+import {Error} from '../../components/Error/Error'
+import {isLoaded} from '../../reducer/loading'
+import {fetchApi} from '../../action/index'
+import {BANKS_LINK, BANKS} from '../../constants'
 
 class Banks extends Component {
 
@@ -17,7 +17,6 @@ class Banks extends Component {
 
     componentDidMount() {
         const {isLoaded, balance: {isLoading} = {}, fetchApi} = this.props
-        console.log(isLoaded,isLoading)
         if (!isLoaded && !isLoading) fetchApi(BANKS_LINK,BANKS)
     }
 

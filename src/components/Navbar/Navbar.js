@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import './Navbar.css'
+import React from 'react';
+//import './Navbar.css'
 import Rate from '../../components/Rate'
-import Converter from '../../containers/Converter'
-import Banks from '../../containers/Banks'
+import Converter from '../../containers/Converter/ConverterLoad'
+import Banks from '../../containers/Banks/Banks'
 import {Switch, Route, BrowserRouter, NavLink} from 'react-router-dom'
 import {PropTypes} from 'prop-types';
 
@@ -26,12 +26,12 @@ const Navbar = () => (
             <div className="mainMenu">
                 <Link to={'/'}> Курс валют НБУ </Link>
                 <Link to={'/converter'}> Конвертер валют </Link>
-                <Link to={'/banks'}> Банки Украины </Link>
+                <Link to={'/balance'}> Платежный баланс Украины </Link>
             </div>
             <Switch>
                 <Route exact path="/" component={Rate} />
                 <Route path="/converter" component={Converter}/>
-                <Route path="/banks" component={Banks}/>
+                <Route path="/balance" component={Banks}/>
             </Switch>
         </div>
     </BrowserRouter>

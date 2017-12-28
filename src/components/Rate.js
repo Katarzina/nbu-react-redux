@@ -1,6 +1,6 @@
 import React from 'react'
-import SetInterval from '../containers/SetInterval'
-import Rate from '../containers/Rate'
+import SetInterval from '../containers/Rate/SetInterval'
+import Rate from '../containers/Rate/Rate'
 
 const RateAll = () => (
     <div className="rateAll">
