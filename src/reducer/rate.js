@@ -16,6 +16,7 @@ import {createSelector} from 'reselect'
 const initialState = {
     isInvalid: false,
     isLoading: false,
+    isLoaded: false,
     day: dateDay,
     month: dateMonth,
     year: dateYear,
@@ -26,26 +27,25 @@ const initialState = {
 export default (state = initialState, action) => {
     const {type, payload} = action;
     switch (type) {
-        case REQUEST + START:
+        case REQUEST + START + RATE:
             return {
                 ...state,
-                isInvalid: false,
                 isLoading: true
             }
         case RECEIVE + RATE:
             return {
                 ...state,
-                isInvalid: false,
                 current: payload,
+                isInvalid: false,
+                isLoaded: true,
                 isLoading: false
             }
-
-        case REQUEST + FAILED:
+        case REQUEST + FAILED + RATE:
             return {
                 ...state,
+                error: payload,
                 isInvalid: true,
-                isLoading: false,
-                error  : payload,
+                isLoading: false
             }
         case UPDATE + CURRENCY:
             return {
@@ -55,27 +55,27 @@ export default (state = initialState, action) => {
         case UPDATE + AMOUNT:
             return {
                 ...state,
-                amount : payload,
+                amount: payload,
             }
         case UPDATE + DAY :
             return {
                 ...state,
-                day : payload,
+                day: payload,
             }
         case UPDATE + MONTH :
             return {
                 ...state,
-                month : payload,
+                month: payload,
             }
         case UPDATE + YEAR :
             return {
                 ...state,
-                year : payload,
+                year: payload,
             }
         case UPDATE + RATE :
             return {
                 ...state,
-                current : payload,
+                current: payload,
             }
         default:
             return state;

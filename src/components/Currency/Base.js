@@ -85,7 +85,7 @@ const currencyFactory = (currencyType, current, amount, currency) => {
                 factory = new CurrencyUah(current, amount, currency);
                 break
             default :
-                break
+                return factory
         }
     return factory
 }

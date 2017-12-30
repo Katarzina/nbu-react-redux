@@ -20,8 +20,8 @@ const getIndicators = (current) => (
     current.filter(({t023}) => isTotal(t023))
         .map(({txt,dt,value}) => (
         <tr key={txt}>
-            {[dt, txt, value].map((item) => (
-                <td className="rate">{item}</td>
+            {[dt, txt, value].map((item, index) => (
+                <td key={index}>{item}</td>
             ))}
         </tr>
     ))

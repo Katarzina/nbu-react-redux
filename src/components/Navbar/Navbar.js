@@ -1,10 +1,8 @@
 import React from 'react';
-//import './Navbar.css'
-import Rate from '../../components/Rate'
-import Converter from '../../containers/Converter/ConverterLoad'
-import Banks from '../../containers/Banks/Banks'
+import RateLoad from '../../containers/Rate/RateLoad'
+import BanksLoad from '../../containers/Banks/BanksLoad'
 import {Switch, Route, BrowserRouter, NavLink} from 'react-router-dom'
-import {PropTypes} from 'prop-types';
+import {PropTypes} from 'prop-types'
 
 const Link = ({color = 'red', to, children}) => (
     <div><NavLink activeStyle={{color: color}} to={to}>{children}</NavLink></div>
@@ -24,14 +22,14 @@ const Navbar = () => (
     <BrowserRouter>
         <div className="Navbar">
             <div className="mainMenu">
-                <Link to={'/'}> Курс валют НБУ </Link>
-                <Link to={'/converter'}> Конвертер валют </Link>
-                <Link to={'/balance'}> Платежный баланс Украины </Link>
+                <Link to={'/nbu-react-redux/'}> Курс валют НБУ </Link>
+                <Link to={'/nbu-react-redux/converter'}> Конвертер валют </Link>
+                <Link to={'/nbu-react-redux/balance'}> Платежный баланс Украины </Link>
             </div>
             <Switch>
-                <Route exact path="/" component={Rate} />
-                <Route path="/converter" component={Converter}/>
-                <Route path="/balance" component={Banks}/>
+                <Route exact path="/nbu-react-redux/" component={RateLoad} />
+                <Route path="/nbu-react-redux/converter" component={RateLoad} />
+                <Route path="/nbu-react-redux/balance" component={BanksLoad} />
             </Switch>
         </div>
     </BrowserRouter>
