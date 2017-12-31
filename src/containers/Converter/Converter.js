@@ -30,27 +30,27 @@ const selectFactory = (current, amount, currency) => {
 
 class Converter extends Component {
     static propTypes = {
-        updateCurrency: PropTypes.func,
-        updateAmount: PropTypes.func,
-        current: PropTypes.array,
-        currency: PropTypes.string,
-        amount: PropTypes.number
+      updateCurrency: PropTypes.func,
+      updateAmount: PropTypes.func,
+      current: PropTypes.array,
+      currency: PropTypes.string,
+      amount: PropTypes.number
     }
 
     static defaultProps = {
-        current: [],
-        currency : '',
-        amount: NULL_CURRENCY_VALUE
+      current: [],
+      currency : '',
+      amount: NULL_CURRENCY_VALUE
     }
 
     onChangeHandler = (ev) => {
-        if (ev.target.validity.valid) this.props.updateAmount(ev.target.value);
-        return false
+      if (ev.target.validity.valid) this.props.updateAmount(ev.target.value);
+      return false
     }
 
-    handleChangeCurrency = ({target : {value}}) => {
-        this.props.updateCurrency(value);
-        return false
+    handleChangeCurrency = ({target: {value}}) => {
+      this.props.updateCurrency(value);
+      return false
     }
 
     render() {

@@ -1,15 +1,15 @@
-export const dateYear = (new Date()).getFullYear().toString()
+export const dateYear = (new Date()).getFullYear() 
 
-export const dateMonth = (new Date()).getMonth().toString()
+export const dateMonth = (new Date()).getMonth()
 
-export const dateDay = (new Date()).getDate().toString()
+export const dateDay = (new Date()).getDate()
 
 export const years = () => {
     const beginArrayYear = 2012;
-    const endArrayYear = parseInt(dateYear, 10);
+    const endArrayYear = +dateYear
     let arrayYear = []
     for (let i = beginArrayYear; i <= endArrayYear; i++) {
-        arrayYear.push(i.toString())
+        arrayYear.push(i)
     }
     return arrayYear;
 }

@@ -31,6 +31,7 @@ class Interval extends Component {
         updateYear: PropTypes.func,
         rate : PropTypes.object,
     }
+
     getCorrectMonth = (month) => (
         (month < 10) ? '0'+ month : month
     )
@@ -39,7 +40,7 @@ class Interval extends Component {
 
         let {rate: {day, month, year} = {}} = this.props;
         let correctMonth = this.getCorrectMonth(++month);
-        this.props.fetchApi(BASE_URL + RATE_LINK_DATE + year+correctMonth+day + '&json', RATE)
+        this.props.fetchApi(BASE_URL + RATE_LINK_DATE + year + correctMonth + day + '&json', RATE)
 
         return false
     }
