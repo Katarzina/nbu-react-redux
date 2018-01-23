@@ -29,17 +29,17 @@ const getIndicators = (current) => (
 
 class BanksFilter extends Component {
     static propTypes = {
-        current: PropTypes.array,
+        balance: PropTypes.array,
         banks: PropTypes.object
     }
 
     static defaultProps = {
-        current : [],
-        banks : {}
+        balance: [],
+        banks: {}
     }
 
     render() {
-        const {current} = this.props;
+        const {balance} = this.props;
         return (
             <div>
                 <h2>Платежный баланс Украины</h2>
@@ -52,11 +52,11 @@ class BanksFilter extends Component {
                     </tr>
                     </thead>
                     <tbody>
-                    {getIndicators(current)}
+                    {getIndicators(balance)}
                     <tr>
                         <td/>
                         <td>Total</td>
-                        <td>{sum(current)}</td>
+                        <td>{sum(balance)}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -67,5 +67,5 @@ class BanksFilter extends Component {
 
 export default connect((state) => ({
     banks: stateSelectorBanks(state),
-    current: currentSelectorBanks(state)
+    balance: currentSelectorBanks(state)
 }))(BanksFilter)

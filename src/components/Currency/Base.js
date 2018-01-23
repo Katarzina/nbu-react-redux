@@ -15,41 +15,28 @@ const getCurrencyRate = (arr , currency) => {
 
 class CurrencyRate {
 
-    constructor(current, amount, selectedCurrency) {
-        this.current = current;
+    constructor(currency, currencyRate, amount, selectedCurrency) {
+        this.currency = currency;
+        this.currencyRate = currencyRate;
         this.amount = amount;
         this.selectedCurrency = selectedCurrency;
     }
 
-    rate = () => ( getCurrencyRate(this.current, this.currency) )
+    rate = () => ( getCurrencyRate(this.currencyRate, this.currency) )
 
-    getSelectedRate = () => (
-        (UAH_CURRENCY === this.selectedCurrency) ? 1 : getCurrencyRate(this.current, this.selectedCurrency)
+    _getSelectedRate = () => (
+        (UAH_CURRENCY === this.selectedCurrency) ? 1 : getCurrencyRate(this.currencyRate, this.selectedCurrency)
     )
 
     calculate = () => (
-        ((this.getSelectedRate() * this.amount) / this.rate()).toFixed(2)
+        ((this._getSelectedRate() * this.amount) / this.rate()).toFixed(2)
     )
-}
-
-class CurrencyEur extends CurrencyRate {
-
-    currency = EUR_CURRENCY;
-
-}
-
-class CurrencyUsd extends CurrencyRate {
-
-    currency = USD_CURRENCY;
-
 }
 
 class CurrencyUah extends CurrencyRate {
 
-    currency = UAH_CURRENCY;
-
     rate = () => (
-        (this.selectedCurrency === UAH_CURRENCY) ? 1 : getCurrencyRate(this.current, this.selectedCurrency)
+        (this.selectedCurrency === this.currency) ? 1 : getCurrencyRate(this.currencyRate, this.selectedCurrency)
     )
 
     calculate = () => (
@@ -59,30 +46,25 @@ class CurrencyUah extends CurrencyRate {
 
 class CurrencyRub extends CurrencyRate {
 
-    currency = RUB_CURRENCY;
-
     calculate = () => (
-        ((this.amount / this.rate()) * this.getSelectedRate()).toFixed(2)
+        ((this.amount / this.rate()) * this._getSelectedRate()).toFixed(2)
     )
 }
 
-const currencyFactory = (currencyType, current, amount, currency) => {
+const currencyFactory = (currencyType, ...payload) => {
         let factory = {}
         switch (currencyType) {
             case (USD_CURRENCY) :
-                factory = new CurrencyUsd(current, amount, currency);
-                break
-
             case (EUR_CURRENCY) :
-                factory = new CurrencyEur(current, amount, currency);
+                factory = new CurrencyRate(currencyType,...payload);
                 break
 
             case (RUB_CURRENCY) :
-                factory = new CurrencyRub(current, amount, currency);
+                factory = new CurrencyRub(currencyType,...payload);
                 break
 
             case (UAH_CURRENCY) :
-                factory = new CurrencyUah(current, amount, currency);
+                factory = new CurrencyUah(currencyType,...payload);
                 break
             default :
                 return factory

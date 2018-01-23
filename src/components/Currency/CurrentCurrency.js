@@ -6,7 +6,7 @@ const currentCurrency = (props) => {
 		return <p>
                 <input readOnly="readonly" value= {value} size="10" type="text" />
                 <span>{currency}</span>
-                <input readOnly="readonly" value={rate} size="4" type="text" />
+                <input readOnly="readonly" value={rate} size="8" type="text" />
             </p>
 }
 

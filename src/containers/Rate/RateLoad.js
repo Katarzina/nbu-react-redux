@@ -15,16 +15,16 @@ class Rate extends Component {
         rate: PropTypes.object.isRequired,
         fetchApi: PropTypes.func,
         error: PropTypes.string,
-        current: PropTypes.array
+        currencyRate: PropTypes.array
     }
 
     componentDidMount() {
-        const {rate: {current, isLoading } = {}, fetchApi} = this.props
-        if (!current && !isLoading) fetchApi( BASE_URL + RATE_LINK, RATE )
+        const {rate: {currencyRate, isLoading } = {}, fetchApi} = this.props
+        if (!currencyRate && !isLoading) fetchApi( BASE_URL + RATE_LINK, RATE )
     }
 
     render() {
-        const {location: {pathname}, rate: {error, current, isInvalid, isLoading, isLoaded} = {}} = this.props
+        const {location: {pathname}, rate: {error, currencyRate, isInvalid, isLoading, isLoaded} = {}} = this.props
         if (!isLoaded && !isInvalid && isLoading) {
             return <h2><Loading /></h2>
         }
@@ -33,7 +33,7 @@ class Rate extends Component {
             return <div><Error error={error} /></div>
         }
 
-        if (!current) {
+        if (!currencyRate) {
             return null
         }
 

@@ -14,16 +14,16 @@ class Banks extends Component {
         banks: PropTypes.object,
         fetchApi: PropTypes.func,
         error: PropTypes.string,
-        current: PropTypes.array
+        balance: PropTypes.array
     }
 
     componentDidMount() {
-        const {banks: {current, isLoading} = {}, fetchApi} = this.props
-        if (!current && !isLoading) fetchApi(BANKS_LINK, BANKS)
+        const {banks: {balance, isLoading} = {}, fetchApi} = this.props
+        if (!balance && !isLoading) fetchApi(BANKS_LINK, BANKS)
     }
 
     render() {
-        const {banks: {error, current, isInvalid, isLoading, isLoaded } = {}} = this.props
+        const {banks: {error, balance, isInvalid, isLoading, isLoaded } = {}} = this.props
 
         if (!isLoaded && !isInvalid && isLoading) {
             return <h2><Loading /></h2>
@@ -33,7 +33,7 @@ class Banks extends Component {
             return <Error error={error}/>
         }
 
-        if (!current) {
+        if (!balance) {
             return null
         }
 

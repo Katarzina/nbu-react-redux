@@ -5,19 +5,19 @@ import { fetchApi, updateDay, updateMonth, updateYear } from '../../action'
 import { BASE_URL, MONTHS, RATE_LINK_DATE, RATE } from '../../constants'
 import { years , days } from '../../share/share'
 
-const createYearList = (arr) => (
-    arr.map((year) => (
+const createYearList = (array) => (
+    array.map((year) => (
         <option className='option' key={year} value={year}>{year}</option>
     ))
 );
 
-const createMonthList = (arr) => (
-    arr.map((month, index) => (
+const createMonthList = (array) => (
+    array.map((month, index) => (
         <option className='option' key={month} value={index}>{month}</option>
     ))
 );
-const createDaysList = (arr) => (
-    arr.map((day) => (
+const createDaysList = (array) => (
+    array.map((day) => (
         <option className='option' key={day} value={day}>{day}</option>
     ))
 );
@@ -38,8 +38,8 @@ class Interval extends Component {
 
 	onClickHandler = (ev) => {
 
-        let {rate: {day, month, year} = {}} = this.props;
-        let correctMonth = this.getCorrectMonth(++month);
+        let {rate: {day, month, year} = {}} = this.props
+        const correctMonth = this.getCorrectMonth(++month)
         this.props.fetchApi(BASE_URL + RATE_LINK_DATE + year + correctMonth + day + '&json', RATE)
 
         return false
@@ -64,10 +64,10 @@ class Interval extends Component {
 
 
     render() {
-        const {rate: {day, month, year} = {}} = this.props;
-        const daysSelect = createDaysList(days())
-        const monthsSelect = createMonthList(MONTHS)
-        const yearsSelect = createYearList(years())
+        const {rate: {day, month, year} = {}} = this.props,
+              daysSelect = createDaysList(days()),
+              monthsSelect = createMonthList(MONTHS),
+              yearsSelect = createYearList(years())
 		return (
             <div>
                 <select name="day" value={day} onChange={this.handleChangeDay}>

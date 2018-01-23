@@ -35,7 +35,7 @@ export default (state = initialState, action) => {
         case RECEIVE + RATE:
             return {
                 ...state,
-                current: payload,
+                currencyRate: payload,
                 isInvalid: false,
                 isLoaded: true,
                 isLoading: false
@@ -75,7 +75,7 @@ export default (state = initialState, action) => {
         case UPDATE + RATE :
             return {
                 ...state,
-                current: payload,
+                currencyRate: payload,
             }
         default:
             return state;
@@ -83,5 +83,5 @@ export default (state = initialState, action) => {
 };
 
 export const stateSelector = (state) => state['rate'];
-export const currentSelector = createSelector(stateSelector, (rate) => rate['current']);
+export const rateSelector = createSelector(stateSelector, (rate) => rate['currencyRate']);
 

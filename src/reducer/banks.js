@@ -23,7 +23,7 @@ export default (state = initialState, action) => {
         case RECEIVE + BANKS:
             return {
                 ...state,
-                current: payload,
+                balance: payload,
                 data: payload,
                 isInvalid: false,
                 isLoaded: true,
@@ -32,7 +32,7 @@ export default (state = initialState, action) => {
         case UPDATE + FILTER :
             return {
                 ...state,
-                current: payload,
+                balance: payload,
             }
         case REQUEST + FAILED + BANKS:
             return {
@@ -47,7 +47,7 @@ export default (state = initialState, action) => {
 };
 
 export const stateSelectorBanks = (state) => state['banks'];
-export const currentSelectorBanks = createSelector(stateSelectorBanks, (banks) => banks['current']);
+export const currentSelectorBanks = createSelector(stateSelectorBanks, (banks) => banks['balance']);
 
 
 

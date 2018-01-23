@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { updateRate } from '../../action'
 import {connect} from 'react-redux'
 import { ARRAY_MAIN_CURRENCY } from '../../constants'
-import {stateSelector, currentSelector} from '../../reducer/rate'
+import {stateSelector, rateSelector} from '../../reducer/rate'
 
 /**
 * Filter rate data by currency
@@ -26,25 +26,24 @@ const Rate = ({children}) => (
 
 class RateCurrent extends Component {
     static propTypes = {
-        current: PropTypes.array,
-        rate : PropTypes.object,
+        currencyRate: PropTypes.array,
+        rate: PropTypes.object,
         updateRate: PropTypes.func
     }
 
     sorted = { сс: true, txt: true, r030: true, rate: true  }
 
     sort(type) {
-        const { current, updateRate } = this.props;
-
+        const { currencyRate, updateRate } = this.props,
         // get sorting order
-        const isSorted = this.sorted[type];
+        isSorted = this.sorted[type];
 
         // set direction
         let direction = isSorted ? 1 : -1;
 
         // create new data array for update state
         // and make sorting
-        const sorted = [].slice.call(current).sort((a, b) => {
+        const sorted = [].slice.call(currencyRate).sort((a, b) => {
             // чтобы сортировка всегда была одинаковой учтём все условия
             // функция может вернуть 0, 1 или -1, в зависимости от возвращаемого
             // значения метод массивов sort сделает свой выбор
@@ -58,8 +57,8 @@ class RateCurrent extends Component {
 
     render() {
 
-        const { current, condition } = this.props
-        let rateCurrency = (condition) ? choiceCurrency( current, ARRAY_MAIN_CURRENCY) : current
+        const { currencyRate, condition } = this.props
+        let rateCurrency = (condition) ? choiceCurrency( currencyRate, ARRAY_MAIN_CURRENCY) : currencyRate
 
         return (
             <div>
@@ -91,6 +90,6 @@ class RateCurrent extends Component {
 }
 export default connect((state) => ({
    rate: stateSelector(state),
-   current : currentSelector(state)
-}), {updateRate})(RateCurrent)
+   currencyRate: rateSelector(state)
+}),{updateRate})(RateCurrent)
 

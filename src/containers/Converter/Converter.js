@@ -3,20 +3,22 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import CurrentCurrency from '../../components/Currency/CurrentCurrency'
 import { updateAmount, updateCurrency } from '../../action'
-import { ARRAY_CURRENCY, NULL_CURRENCY_VALUE, PATTERN } from '../../constants'
+import { ARRAY_CURRENCY } from '../../constants'
 import { currencyFactory } from '../../components/Currency/Base'
 
-const createCurrencyList = (arr) => (
-    arr.map((currency) => (
+const createCurrencyList = (arrayCurrency) => (
+    arrayCurrency.map((currency) => (
         <option className='option' key={currency} value={currency}>{currency}</option>
     ))
 );
 
-const selectFactory = (current, amount, currency) => {
-    let factory = [], result = [], dataFactory = {}
-    ARRAY_CURRENCY.forEach((currencyItem, index) => {
+const selectFactory = (currencyRate, amount, currency) => {
+    let factory = [],
+        result = [],
+        dataFactory = {}
+    ARRAY_CURRENCY.forEach((currencyItem) => {
       if(currency !== currencyItem) {
-        factory = currencyFactory(currencyItem, current, amount, currency)
+        factory = currencyFactory(currencyItem, currencyRate, amount, currency)
         dataFactory = {
           calculate: factory.calculate(),
           currency: factory.currency,
@@ -28,11 +30,11 @@ const selectFactory = (current, amount, currency) => {
     return result
 }
 
-class Converter extends Component {
+export class Converter extends Component {
     static propTypes = {
       updateCurrency: PropTypes.func,
       updateAmount: PropTypes.func,
-      current: PropTypes.array,
+      currencyRate: PropTypes.array,
       currency: PropTypes.string,
       amount: PropTypes.number
     }
@@ -40,7 +42,7 @@ class Converter extends Component {
     static defaultProps = {
       current: [],
       currency : '',
-      amount: NULL_CURRENCY_VALUE
+      amount: 0
     }
 
     onChangeHandler = (ev) => {
@@ -54,13 +56,13 @@ class Converter extends Component {
     }
 
     render() {
-      const {rate: {current, amount, currency} = {}} = this.props;
-      const currencySelect = createCurrencyList(ARRAY_CURRENCY)
-      const resultFactory = selectFactory(current, amount, currency)
+      const {rate: {currencyRate, amount, currency} = {}} = this.props,
+            currencySelect = createCurrencyList(ARRAY_CURRENCY),
+            resultFactory = selectFactory(currencyRate, amount, currency)
       return (
         <div>
           <form onChange={this.onChangeHandler}>
-            <input type="text" placeholder={NULL_CURRENCY_VALUE} pattern={PATTERN} />
+            <input type="text" placeholder="0.00" pattern="[.0-9]*" />
           </form>
           <select name="currency" value={currency} onChange={this.handleChangeCurrency}>
             {currencySelect}
