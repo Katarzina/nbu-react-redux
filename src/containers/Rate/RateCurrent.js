@@ -86,16 +86,10 @@ class RateCurrent extends Component {
                 </table>
             </div>
         )
-    }
+    }it
 }
 export default connect((state) => ({
-<<<<<<< HEAD:src/components/RateCurrent.js
-    rate: stateSelector(state),
-    current: currentSelector(state)})
-    , {updateRate})(RateCurrent)
-=======
    rate: stateSelector(state),
    currencyRate: rateSelector(state)
 }),{updateRate})(RateCurrent)
->>>>>>> msim:src/containers/Rate/RateCurrent.js
 
