@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import { updateFilter } from '../action'
-import {stateSelectorBanks, currentSelectorBanks} from '../reducer/banks'
+import {updateFilter} from '../../action'
+import {stateSelectorBanks} from '../../reducer/banks'
 
 
 class SearchBar extends Component {
@@ -13,13 +13,11 @@ class SearchBar extends Component {
     }
 
     dataSearch = e => {
-
-        const value = e.target.value.toLowerCase();
-        const { updateFilter, banks: {data} = {} } = this.props
-
-        const filter = data.filter( title => {
-            return title.txt.toLowerCase().includes(value);
-        });
+        const value = e.target.value.toLowerCase(),
+            { updateFilter, banks: {data} = {} } = this.props,
+            filter = data.filter( title => {
+              return title.txt.toLowerCase().includes(value);
+            });
         updateFilter(filter);
     };
 
@@ -39,5 +37,4 @@ class SearchBar extends Component {
 
 export default connect((state) => ({
     banks: stateSelectorBanks(state),
-    current : currentSelectorBanks(state)
 }),{updateFilter})(SearchBar)

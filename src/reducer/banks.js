@@ -1,50 +1,45 @@
 import {
-    UPDATE,
-    REQUEST,
-    START,
-    FAILED,
-    RECEIVE,
-    BANKS,
+    UPDATE, REQUEST,
+    RECEIVE, FAILED,
+    BANKS, START,
     FILTER
 } from '../constants';
 import {createSelector} from 'reselect'
 
 const initialState = {
     isInvalid: false,
-    isLoading: false
-};
+    isLoading: false,
+    isLoaded: false
+}
 
 export default (state = initialState, action) => {
-
     const {type, payload} = action
-
-    console.log(type, payload)
-
     switch (type) {
-        case REQUEST + START:
+        case REQUEST + START + BANKS:
             return {
                 ...state,
-                isInvalid: false,
                 isLoading: true
             }
         case RECEIVE + BANKS:
             return {
                 ...state,
-                isInvalid: false,
-                current: payload,
+                balance: payload,
                 data: payload,
+                isInvalid: false,
+                isLoaded: true,
                 isLoading: false
             }
         case UPDATE + FILTER :
             return {
                 ...state,
-                current : payload,
+                balance: payload,
             }
-        case REQUEST + FAILED:
+        case REQUEST + FAILED + BANKS:
             return {
                 ...state,
+                error: payload,
                 isInvalid: true,
-                error: payload
+                isLoading: false
             }
         default:
             return state;
@@ -52,7 +47,7 @@ export default (state = initialState, action) => {
 };
 
 export const stateSelectorBanks = (state) => state['banks'];
-export const currentSelectorBanks = createSelector(stateSelectorBanks, (banks) => banks['current']);
+export const currentSelectorBanks = createSelector(stateSelectorBanks, (banks) => banks['balance']);
 
 
 

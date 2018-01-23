@@ -1,14 +1,11 @@
 import {
-    REQUEST,
-    START,
-    FAILED,
-    RECEIVE,
-    RATE,
-    UPDATE,
-    DAY,
-    MONTH,
-    YEAR,
-    AMOUNT, CURRENCY
+    REQUEST, START,
+    FAILED, RECEIVE,
+    RATE, UPDATE,
+    DAY, MONTH,
+    YEAR, AMOUNT,
+    CURRENCY,
+    NULL_CURRENCY_VALUE, USD_CURRENCY
 } from '../constants';
 import {
     dateYear, dateMonth, dateDay
@@ -19,36 +16,36 @@ import {createSelector} from 'reselect'
 const initialState = {
     isInvalid: false,
     isLoading: false,
+    isLoaded: false,
     day: dateDay,
     month: dateMonth,
     year: dateYear,
-    amount: 0,
-    currency: 'USD'
+    amount: NULL_CURRENCY_VALUE,
+    currency: USD_CURRENCY
 };
 
 export default (state = initialState, action) => {
     const {type, payload} = action;
     switch (type) {
-        case REQUEST + START:
+        case REQUEST + START + RATE:
             return {
                 ...state,
-                isInvalid: false,
                 isLoading: true
             }
         case RECEIVE + RATE:
             return {
                 ...state,
+                currencyRate: payload,
                 isInvalid: false,
-                current: payload,
+                isLoaded: true,
                 isLoading: false
             }
-
-        case REQUEST + FAILED:
+        case REQUEST + FAILED + RATE:
             return {
                 ...state,
+                error: payload,
                 isInvalid: true,
-                isLoading: false,
-                error  : payload,
+                isLoading: false
             }
         case UPDATE + CURRENCY:
             return {
@@ -58,27 +55,27 @@ export default (state = initialState, action) => {
         case UPDATE + AMOUNT:
             return {
                 ...state,
-                amount : payload,
+                amount: payload,
             }
         case UPDATE + DAY :
             return {
                 ...state,
-                day : payload,
+                day: payload,
             }
         case UPDATE + MONTH :
             return {
                 ...state,
-                month : payload,
+                month: payload,
             }
         case UPDATE + YEAR :
             return {
                 ...state,
-                year : payload,
+                year: payload,
             }
         case UPDATE + RATE :
             return {
                 ...state,
-                current : payload,
+                currencyRate: payload,
             }
         default:
             return state;
@@ -86,5 +83,5 @@ export default (state = initialState, action) => {
 };
 
 export const stateSelector = (state) => state['rate'];
-export const currentSelector = createSelector(stateSelector, (rate) => rate['current']);
+export const rateSelector = createSelector(stateSelector, (rate) => rate['currencyRate']);
 
